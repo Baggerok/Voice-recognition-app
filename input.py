@@ -33,7 +33,8 @@ def mode_typing (phrase):
         keyboard.release(letter)
 
 def mode_default(phrase):
-    print(phrase)
+    if phrase != "":
+        print(phrase)
 
 def mode_gaming (phrase):
     key = binds.get(phrase)
