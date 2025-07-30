@@ -40,6 +40,7 @@ def main():
                     phrase = result.get("text", "")
                     
                     Moder.mode_recognition(phrase)
+                    Moder.util_recognition(phrase)
                     Moder.mode_exec(phrase)
 
                 """partial
