@@ -30,7 +30,6 @@ class Mode_handler:
     def mode_exec(self, phrase):
         if self.mode_changed != True:
             self.__funcs[self.__current_mode](phrase)
-
 def press_key (key):
     keyboard.press(key)
     time.sleep(0.01)
