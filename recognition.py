@@ -9,8 +9,11 @@ import input
 
 q = queue.Queue()
 
+stop_recognition = False
+
 def shutdown():
-        sys.exit(0)
+    global stop_recognition
+    stop_recognition = True
 
 def callback(indata, frames, time, status):
     q.put(bytes(indata))
@@ -34,7 +37,7 @@ def main():
 
             Moder = input.Mode_handler()
 
-            while True:
+            while not stop_recognition:
                 data = q.get()
 
                 # recognized
