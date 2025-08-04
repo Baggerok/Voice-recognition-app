@@ -8,12 +8,12 @@ import os
 import input
 
 q = queue.Queue()
-
 stop_recognition = False
 
 def shutdown():
     global stop_recognition
     stop_recognition = True
+
 
 def callback(indata, frames, time, status):
     q.put(bytes(indata))
