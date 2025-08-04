@@ -1,39 +1,76 @@
-from PyQt5 import QtWidgets
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget
-import sys
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-import sys
-import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-import recognition
-from PyQt5.QtCore import pyqtSignal, QObject
-import threading
 
-def recognition_thread():
-    recognition.main()
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName("MainWindow")
+        MainWindow.setLayoutDirection(QtCore.Qt.LeftToRight)
+        MainWindow.resize(622, 528)
 
-def start_recognition():
-    thread = threading.Thread(target=recognition_thread, daemon=True)
-    thread.start()
+        self.centralwidget = QtWidgets.QWidget(MainWindow)
+        self.centralwidget.setObjectName("centralwidget")
 
-def window ():
+        self.line = QtWidgets.QFrame(self.centralwidget)
+        self.line.setGeometry(QtCore.QRect(0, 50, 621, 31))
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line.setObjectName("line")
 
-    app = QApplication(sys.argv)
-    win = QMainWindow()
-    win.setGeometry(0,0,1280,720)
-    win.setWindowTitle("My app")
+        self.start_button = QtWidgets.QPushButton(self.centralwidget)
+        self.start_button.setGeometry(QtCore.QRect(490, 10, 111, 41))
+        self.start_button.setObjectName("start_button")
 
-    central_widget = QWidget()
-    layout = QVBoxLayout()
-    central_widget.setLayout(layout)
-    win.setCentralWidget(central_widget)
+        self.modes_label = QtWidgets.QLabel(self.centralwidget)
+        self.modes_label.setGeometry(QtCore.QRect(10, 20, 61, 31))
+        self.modes_label.setObjectName("modes_label")
+        self.modes_label_2 = QtWidgets.QLabel(self.centralwidget)
+        self.modes_label_2.setGeometry(QtCore.QRect(60, 20, 281, 31))
 
-    start_button = QtWidgets.QPushButton("Start recognition")
-    layout.addWidget(start_button)
+        font = QtGui.QFont()
+        font.setUnderline(False)
 
-    start_button.clicked.connect(start_recognition)
+        self.modes_label_2.setFont(font)
+        self.modes_label_2.setObjectName("modes_label_2")
 
-    win.show()
+        self.vertical_line = QtWidgets.QFrame(self.centralwidget)
+        self.vertical_line.setGeometry(QtCore.QRect(460, 0, 21, 61))
+        self.vertical_line.setFrameShape(QtWidgets.QFrame.VLine)
+        self.vertical_line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.vertical_line.setObjectName("vertical_line")
+
+        self.text_app = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.text_app.setGeometry(QtCore.QRect(10, 80, 331, 381))
+        self.text_app.setAutoFillBackground(True)
+        self.text_app.setPlainText("")
+        self.text_app.setObjectName("text_app")
+
+        MainWindow.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 622, 26))
+        self.menubar.setObjectName("menubar")
+        MainWindow.setMenuBar(self.menubar)
+
+        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.statusbar.setObjectName("statusbar")
+        MainWindow.setStatusBar(self.statusbar)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        _translate = QtCore.QCoreApplication.translate
+        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.start_button.setText(_translate("MainWindow", "Start recognition"))
+        self.modes_label.setText(_translate("MainWindow", "Modes:"))
+        self.modes_label_2.setText(_translate("MainWindow", "Default, gaming, speech typing"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+
     sys.exit(app.exec_())
-
-window()
