@@ -9,6 +9,9 @@ import input
 
 q = queue.Queue()
 
+def shutdown():
+        sys.exit(0)
+
 def callback(indata, frames, time, status):
     q.put(bytes(indata))
 
