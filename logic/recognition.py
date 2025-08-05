@@ -12,7 +12,7 @@ import config
 q = queue.Queue()
 stop_recognition = False
 
-def shutdown():
+def shutdown_recog():
     global stop_recognition
     stop_recognition = True
 

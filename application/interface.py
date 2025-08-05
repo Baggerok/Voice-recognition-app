@@ -1,7 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
-class Ui_MainWindow(object):
+class Main_UI(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -19,6 +18,7 @@ class Ui_MainWindow(object):
         self.start_button = QtWidgets.QPushButton(self.centralwidget)
         self.start_button.setGeometry(QtCore.QRect(490, 10, 111, 41))
         self.start_button.setObjectName("start_button")
+        
 
         self.modes_label = QtWidgets.QLabel(self.centralwidget)
         self.modes_label.setGeometry(QtCore.QRect(10, 20, 61, 31))
