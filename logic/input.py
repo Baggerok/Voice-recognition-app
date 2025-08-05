@@ -1,5 +1,5 @@
 from pynput.keyboard import Key, Controller
-import parser as parse
+from logic import parser as parse
 import time
 
 keyboard = Controller()

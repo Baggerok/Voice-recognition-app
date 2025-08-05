@@ -1,11 +1,13 @@
 import sounddevice as sd
 from vosk import Model, KaldiRecognizer
+
 import queue
 import sys
 import json
 import os
 
-import input
+from logic import input
+import config
 
 q = queue.Queue()
 stop_recognition = False
@@ -14,12 +16,11 @@ def shutdown():
     global stop_recognition
     stop_recognition = True
 
-
 def callback(indata, frames, time, status):
     q.put(bytes(indata))
 
 def main():
-    MODEL_PATH = os.path.join("Models", "vosk-model-small-ru-0.22")
+    MODEL_PATH = config.from_root("resources", "Models", "vosk-model-small-ru-0.22")
     model = Model(MODEL_PATH)
 
     device_info = sd.query_devices(None, "input")

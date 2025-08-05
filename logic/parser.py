@@ -1,8 +1,11 @@
 import json
+import config
+
+BINDINGS_PATH =  config.from_root("resources", "bindings.json")
 
 class Parser:
     def __init__(self):
-        self.binds = self.__parse_bindings("bindings.json")
+        self.binds = self.__parse_bindings(BINDINGS_PATH)
         self.phrase_parsing = False
 
     def __parse_bindings (self, file):

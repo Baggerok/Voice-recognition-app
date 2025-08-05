@@ -41,8 +41,10 @@ class Ui_MainWindow(object):
         self.text_app = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.text_app.setGeometry(QtCore.QRect(10, 80, 331, 381))
         self.text_app.setAutoFillBackground(True)
-        self.text_app.setPlainText("")
         self.text_app.setObjectName("text_app")
+        self.text_app.setReadOnly(True)
+        self.text_app.setPlainText("")
+        
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
@@ -63,14 +65,3 @@ class Ui_MainWindow(object):
         self.start_button.setText(_translate("MainWindow", "Start recognition"))
         self.modes_label.setText(_translate("MainWindow", "Modes:"))
         self.modes_label_2.setText(_translate("MainWindow", "Default, gaming, speech typing"))
-
-
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-
-    sys.exit(app.exec_())
