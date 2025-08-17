@@ -8,17 +8,16 @@ parser = parse.Parser()
 class Mode_handler:
     def __init__(self, print_callback=None):
         self.__modes = ["отключить", "игровой режим", "печать голосом"]
-        self.__utilities = ["изменить чтения"]
-        self.__funcs = [self.mode_default, self.mode_gaming, self.mode_typing, parser.toggle_parsing]
+        self.__utilities = ["режим фраз"]
+        self.__funcs = [self.mode_default, self.mode_gaming, self.mode_typing, parser.toggle_sentence_parsing]
         self.__current_mode = 0
         self.mode_changed = False
-        self.print = print_callback or print  # fallback на обычный print
 
     def mode_recognition(self, phrase):
         if phrase in self.__modes:
             self.__current_mode = self.__modes.index(phrase)
             self.mode_changed = True
-            self.print("Changed mode to " + self.__modes[self.__current_mode])
+            print("Changed mode to " + self.__modes[self.__current_mode])
         else:
             self.mode_changed = False
 
@@ -48,19 +47,19 @@ class Mode_handler:
             for word in parsed_phrase:
                 key = parser.binds.get(word)
                 if key:
-                    self.print("pressing " + key)
+                    print("pressing " + key)
                     self.press_key(key)
                     word_found = True
             if not word_found:
-                self.print("gaming...")
+                print("gaming...")
         else:
             key = parser.binds.get(phrase)
             if key:
-                self.print("pressing " + key)
+                print("pressing " + key)
                 self.press_key(key)
             else:
-                self.print("gaming...")
+                print("gaming...")
 
     def mode_default(self, phrase):
         if phrase != "":
-            self.print(phrase)
+            print(phrase)

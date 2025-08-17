@@ -15,6 +15,6 @@ class Parser:
     def parse_phrase (self, phrase):
         return phrase.split()
 
-    def toggle_parsing (self, phrase):
+    def toggle_sentence_parsing (self, phrase):
             self.phrase_parsing = not self.phrase_parsing
             print("Changed parsing mode to " + str(self.phrase_parsing))

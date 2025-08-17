@@ -6,7 +6,6 @@ import sys
 import json
 import os
 
-from logic import input
 import config
 
 q = queue.Queue()
@@ -19,7 +18,7 @@ def shutdown_recog():
 def callback(indata, frames, time, status):
     q.put(bytes(indata))
 
-def main():
+def main(Moder):
     MODEL_PATH = config.from_root("resources", "Models", "vosk-model-small-ru-0.22")
     model = Model(MODEL_PATH)
 
@@ -35,8 +34,6 @@ def main():
             
             rec = KaldiRecognizer(model, samplerate)
             rec.SetWords(True)
-
-            Moder = input.Mode_handler()
 
             while not stop_recognition:
                 data = q.get()
