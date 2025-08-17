@@ -1,6 +1,7 @@
 import sounddevice as sd
 from vosk import Model, KaldiRecognizer
 
+import threading
 import queue
 import sys
 import json
@@ -8,35 +9,33 @@ import os
 
 import config
 
-q = queue.Queue()
-stop_recognition = False
 
-def shutdown_recog():
-    global stop_recognition
-    stop_recognition = True
+MODEL_PATH = config.from_root("resources", "Models", "vosk-model-small-ru-0.22")
 
-def callback(indata, frames, time, status):
-    q.put(bytes(indata))
+class Recognizer:
+    def __init__(self):
+        self.stop_recognition = False
+        self.que = queue.Queue()
+        self.model = Model(MODEL_PATH)
+        self.device_info = sd.query_devices(None, "input")
+        self.samplerate = int(self.device_info["default_samplerate"])
 
-def main(Moder):
-    MODEL_PATH = config.from_root("resources", "Models", "vosk-model-small-ru-0.22")
-    model = Model(MODEL_PATH)
+    def callback(self, indata, frames, time, status):
+        self.que.put(bytes(indata))
 
-    device_info = sd.query_devices(None, "input")
-    samplerate = int(device_info["default_samplerate"])
-    try:
+    def recog_loop(self,Moder):
         with sd.RawInputStream(
-                samplerate=samplerate,
-                blocksize=8000,
-                dtype="int16",
-                channels=1,
-                callback=callback):
+                samplerate = self.samplerate,
+                blocksize = 8000,
+                dtype = "int16",
+                channels = 1,
+                callback = self.callback):
             
-            rec = KaldiRecognizer(model, samplerate)
+            rec = KaldiRecognizer(self.model, self.samplerate)
             rec.SetWords(True)
 
-            while not stop_recognition:
-                data = q.get()
+            while self.stop_recognition == False:
+                data = self.que.get()
 
                 # recognized
                 if rec.AcceptWaveform(data):
@@ -46,16 +45,3 @@ def main(Moder):
                     Moder.mode_recognition(phrase)
                     Moder.util_recognition(phrase)
                     Moder.mode_exec(phrase)
-
-                """partial
-                else:
-                    partial = json.loads(rec.PartialResult())
-                    print(partial.get("partial", ""))
-                """
-    except KeyboardInterrupt:
-        print("\nStopped by user")
-    except Exception as e:
-        print(f"Error occured: {e}")
-        
-if __name__ == "__main__":
-    main()

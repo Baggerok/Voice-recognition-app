@@ -6,7 +6,7 @@ keyboard = Controller()
 parser = parse.Parser()
 
 class Mode_handler:
-    def __init__(self, print_callback=None):
+    def __init__(self):
         self.__modes = ["отключить", "игровой режим", "печать голосом"]
         self.__utilities = ["режим фраз"]
         self.__funcs = [self.mode_default, self.mode_gaming, self.mode_typing, parser.toggle_sentence_parsing]
